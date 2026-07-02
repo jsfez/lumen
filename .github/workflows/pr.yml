@@ -118,7 +118,8 @@ jobs:
   sonar:
     name: Sonar scan
     needs: unit-testing
-    if: ${{ !cancelled() && needs.unit-testing.result == 'success' }}
+    # Skipped on this fork: requires Ledger's SONAR_TOKEN secret
+    if: ${{ false }}
     uses: ./.github/workflows/scan-sonar-called.yml
     with:
       should_download_coverage: true
