@@ -1,0 +1,49 @@
+name: 'Argos'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: argos-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  argos:
+    name: Run Argos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: ./.github/actions/setup
+        with:
+          set-shas: 'false'
+
+      - name: Build libraries
+        env:
+          NX_NO_CLOUD: true
+        run: npx nx run-many --target=build --projects=@ledgerhq/lumen-design-core,@ledgerhq/lumen-ui-react
+
+      - name: Build Storybook
+        env:
+          NX_NO_CLOUD: true
+          NODE_OPTIONS: '--max-old-space-size=6144'
+        run: npx nx run @ledgerhq/lumen-ui-react:build:storybook
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture stories & upload to Argos
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        run: npx playwright test --config=argos/playwright.config.ts

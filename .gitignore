@@ -133,3 +133,8 @@ mise.toml
 **/chromatic-diagnostics.json
 **/build-storybook.log
 !.nx/version-plans/**
+
+# Argos demo
+screenshots/
+test-results/
+playwright-report/
