@@ -690,8 +690,8 @@
   --border-radius-none: 0;
   --border-radius-xxs: 2px;
   --border-radius-xs: 4px;
-  --border-radius-sm: 8px;
-  --border-radius-md: 12px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 6px;
   --border-radius-lg: 16px;
   --border-radius-xl: 24px;
   --border-radius-2xl: 32px;
