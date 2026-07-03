@@ -32,13 +32,13 @@ jobs:
       - name: Build libraries
         env:
           NX_NO_CLOUD: true
-        run: npx nx run-many --target=build --projects=@ledgerhq/lumen-design-core,@ledgerhq/lumen-ui-react
+        run: npx nx run-many --target=build --projects=@ledgerhq/lumen-design-core,@ledgerhq/lumen-ui-react --skip-nx-cache
 
       - name: Build Storybook
         env:
           NX_NO_CLOUD: true
           NODE_OPTIONS: '--max-old-space-size=6144'
-        run: npx nx run @ledgerhq/lumen-ui-react:build:storybook
+        run: npx nx run @ledgerhq/lumen-ui-react:build:storybook --skip-nx-cache
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
