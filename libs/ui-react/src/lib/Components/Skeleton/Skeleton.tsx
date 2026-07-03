@@ -9,6 +9,7 @@ const BaseSkeleton = ({ className, ref, ...props }: BaseSkeletonProps) => {
   return (
     <div
       ref={ref}
+      aria-busy='true'
       className={cn('animate-pulse rounded-md bg-muted-transparent', className)}
       {...props}
     />
